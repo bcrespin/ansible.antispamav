@@ -46,7 +46,7 @@
   template: 
     src=clamsmtpd.conf.j2
     dest="{{ antispamav_clamsmtpd_config_file }}"
-  notify: reload service clamsmtpd
+  notify: restart service clamsmtpd
 
 - name: antispamav / clamsmtpd service file
   template:

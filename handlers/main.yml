@@ -8,5 +8,5 @@
 - name: restart service clamd
   service: name=clamd state=restarted enabled=yes
 
-- name: reload service clamsmtpd
-  service: name=clamsmtpd state=reloaded enabled=yes
+- name: restart service clamsmtpd
+  service: name=clamsmtpd state=restarted enabled=yes
