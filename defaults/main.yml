@@ -1,0 +1,26 @@
+---
+antispamav_packages:
+  - p5-Mail-SpamAssassin
+  - clamsmtp
+ 
+antispamav_spamassassin_config_file: '/etc/mail/spamassassin/local.cf'
+antispamav_clamsmtpd_config_file: '/etc/clamsmtpd.conf'
+antispamav_freshclam_config_file: '/etc/freshclam.conf'
+antispamav_clamd_config_file: '/etc/clamd.conf'
+antispamav_spamassassin_rewrite_header_subject: '*****SPAM*****'
+antispamav_spamassassin_report_safe: '1'
+antispamav_spamassassin_trusted_networks: []
+antispamav_spamassassin_required_score: '5'
+antispamav_spamassassin_extra_options: []
+antispamav_spamassassin_shortcircuiting: []
+antispamav_clamsmtpd_outAddress: '10026'
+antispamav_clamsmtpd_quarantine: 'no'
+antispamav_clamsmtpd_Listen: '127.0.0.1:10025'
+antispamav_clamsmtpd_scannedEmail: 'Header: X-Virus-Scanned: ClamAV using ClamSMTP'
+antispamav_clamsmtpd_extra_options: []
+antispamav_freshclam_check_intervall: '12'
+antispamav_freshclam_log_syslog_enabled: 'yes'
+antispamav_freshclam_extra_options: []
+antispamav_freshclam_databasemirror: 'database.clamav.net'
+antispamav_clamd_log_syslog_enabled: 'yes'
+antispamav_clamd_extra_options: []

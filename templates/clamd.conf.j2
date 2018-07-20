@@ -1,0 +1,15 @@
+# ansibled managed
+# do not edit by hand
+
+LogSyslog {{ antispamav_clamd_log_syslog_enabled }}
+LocalSocket  /var/clamav/run/clamd.socket
+LocalSocketGroup _clamav
+LocalSocketMode 660
+User _clamav
+{% if antispamav_clamd_extra_options is defined and antispamav_clamd_extra_options %}
+{% for extra_options in antispamav_clamd_extra_options %}
+{% for key,value in extra_options.iteritems() %}
+{{ key }}: {{ value }} 
+{% endfor %}
+{% endfor %}
+{% endif %}

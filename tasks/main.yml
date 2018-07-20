@@ -1,0 +1,58 @@
+---
+- name: antispamav / install required packages (OpenBSD)
+  openbsd_pkg: name={{ item }} state=present 
+  with_items: "{{ antispamav_packages }}"
+
+- name: antispamav / spamassassin config file
+  template: 
+    src=spamassassin.local.cf.j2
+    dest="{{ antispamav_spamassassin_config_file }}"
+  notify: reload service spamassassin
+    
+- name: antispamav / spamassassin service 
+  service: name=spamassassin state=started enabled=yes
+  
+- name: antispamav / freshclam config file
+  template: 
+    src=freshclam.conf.j2
+    dest="{{ antispamav_freshclam_config_file }}"
+  notify: restart service freshclam
+
+- name: antispamav / freshclam first run
+  command: '/usr/local/bin/freshclam'  
+  args:
+    creates: '/var/db/clamav/main.cvd'
+
+- name: antispamav / freshclam service 
+  service: name=freshclam state=started enabled=yes
+
+- name: antispamav / clamd config file
+  template: 
+    src=clamd.conf.j2
+    dest="{{ antispamav_clamd_config_file }}"
+  notify: restart service clamd
+ 
+- name: antispamav / clamav run folder
+  file:
+    path: '/var/clamav/run'
+    state: directory
+    owner: '_clamav'
+    group: '_clamav'
+ 
+- name: antispamav / clamd service
+  service: name=clamd state=started enabled=yes
+
+- name: antispamav / clamsmtpd config file
+  template: 
+    src=clamsmtpd.conf.j2
+    dest="{{ antispamav_clamsmtpd_config_file }}"
+  notify: reload service clamsmtpd
+
+- name: antispamav / clamsmtpd service file
+  template:
+    src=service_clamsmtpd.j2
+    dest='/etc/rc.d/clamsmtpd'
+    mode=755
+  
+- name: antispamav / clamsmtpd service
+  service: name=clamsmtpd state=started enabled=yes

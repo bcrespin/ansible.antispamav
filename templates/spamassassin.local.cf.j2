@@ -1,0 +1,28 @@
+# ansibled managed
+# do not edit by hand
+
+rewrite_header Subject {{ antispamav_spamassassin_rewrite_header_subject }}
+report_safe {{ antispamav_spamassassin_report_safe }}
+required_score {{ antispamav_spamassassin_required_score }}
+
+{% if antispamav_spamassassin_trusted_networks is defined and antispamav_spamassassin_trusted_networks %}
+trusted_networks {{ antispamav_spamassassin_trusted_networks }}
+{% endif %}
+{% if antispamav_spamassassin_extra_options is defined and antispamav_spamassassin_extra_options %}
+{% for extra_option in antispamav_spamassassin_extra_options %}
+{% for key,value in extra_option.iteritems() %}
+{{ key }} {{ value }} 
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+ifplugin Mail::SpamAssassin::Plugin::Shortcircuit
+#
+#{% if antispamav_spamassassin_shortcircuiting  is defined  and antispamav_spamassassin_shortcircuiting %}}
+{% for extra_option in antispamav_spamassassin_shortcircuiting %}
+{% for key,value in extra_option.iteritems() %}
+{{ key }} {{ value }}
+{% endfor %}
+{% endfor %}
+{% endif %}
+endif # Mail::SpamAssassin::Plugin::Shortcircuit

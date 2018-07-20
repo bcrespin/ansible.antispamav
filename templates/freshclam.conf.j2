@@ -1,0 +1,14 @@
+# ansibled managed
+# do not edit by hand
+
+Checks {{ antispamav_freshclam_check_intervall }}
+NotifyClamd {{ antispamav_clamd_config_file }}
+LogSyslog {{ antispamav_freshclam_log_syslog_enabled }}
+DatabaseMirror {{  antispamav_freshclam_databasemirror }}
+{% if antispamav_freshclam_extra_options is defined and antispamav_freshclam_extra_options %}}
+{% for extra_options in antispamav_freshclam_extra_options %}
+{% for key,value in extra_options.iteritems() %}
+{{ key }}: {{ value }} 
+{% endfor %}
+{% endfor %}
+{% endif %}
